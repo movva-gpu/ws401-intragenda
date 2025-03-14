@@ -1,0 +1,7 @@
+@use 'globals';
+
+body {
+    background-color: globals.$cl-bg-low;
+    color: globals.$cl-text;
+    font-family: globals.$ff-default;
+}
