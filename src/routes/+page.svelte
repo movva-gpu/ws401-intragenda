@@ -1,6 +1,10 @@
-<script lang="ts">
+<script>
     import '@fontsource-variable/roboto';
     import '$lib/app.scss';
+
+    /** @type {{users:App.User[]}} */
+    export let data;
+    console.log(data); // OH NO, LOGGING USERS TO THE CONSOLE?!!!
 </script>
 
 <h1>Welcome to SvelteKit</h1>
