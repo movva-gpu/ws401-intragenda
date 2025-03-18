@@ -45,7 +45,9 @@
                 </div>
             </div>
             <div class="header-tools">
-                <div class="icon"><i class="fas fa-th"></i></div>
+                <div class="icon" id="calendar-button">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
                 <a href="iut-login-page.html">
                     <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
                 </a>
@@ -57,7 +59,7 @@
 
         <!-- Content -->
         <div class="content">
-            <h2 class="content-title">Dashboard</h2>
+            <h2 class="content-title">Devoirs</h2>
             <div class="breadcrumb">
                 <i class="fas fa-home"></i>
                 <span>Lorem</span>
@@ -111,5 +113,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Calendrier Modal -->
+    <div class="calendar-modal" id="calendar-modal">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-title">Calendrier des devoirs</div>
+                <div class="calendar-close" id="calendar-close">&times;</div>
+            </div>
+            <div class="calendar-navigation">
+                <button class="calendar-nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i> Mois précédent
+                </button>
+                <div class="calendar-month-year" id="calendar-month-year">Mars 2025</div>
+                <button class="calendar-nav-btn" id="next-month">
+                    Mois suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Le calendrier sera généré par JavaScript -->
+            </div>
+            <div class="calendar-events-list" id="calendar-events-list">
+                <h3>Prochains événements</h3>
+                <!-- La liste des événements sera générée par JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="calendar-script.js"></script>
 </body>
 </html>
