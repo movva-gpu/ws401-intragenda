@@ -1,12 +1,14 @@
 import { env } from "$env/dynamic/private";
+import { config } from "dotenv";
 import { createConnection } from "mariadb";
 
 /** @type {import('mariadb').Connection?} */
 export var db = null;
 
 export async function connect() {
+    config();
     db = await createConnection(
-        `mariadb://${env.MARIADB_USER}:${env.MARIADB_PASSWORD}@127.0.0.1:3306/${env.MARIADB_DATABASE}?serverVersion=10.4.34-MariaDB&charset=utf8mb4`
+        `mariadb://${env.MARIADB_USER || process.env.MARIADB_USER}:${env.MARIADB_PASSWORD || process.env.MARIADB_PASSWORD}@127.0.0.1:3306/${env.MARIADB_DATABASE || process.env.MARIADB_DATABASE}?serverVersion=10.4.34-MariaDB&charset=utf8mb4`
     );
 }
 
