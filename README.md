@@ -45,6 +45,6 @@ Et plus qu'a coder&nbsp;!
 ```bash
 $ git fetch && git pull
 $ npm install # ou yarn install, ou pnpm install, ou bun install
-$ npm run build # ou yarn build, ou pnpm build, ou bun build
+$ npm run build # ou yarn build, ou pnpm build, ou bun run build
 $ systemctl enable --now services/ws401.service # ou systemctl restart ws401
 ```

@@ -1,0 +1,12 @@
+[Unit]
+Description=WS401
+
+[Service]
+ExecStart=/var/www/ws401/server.js
+WorkingDirectory=/var/www/ws401
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
