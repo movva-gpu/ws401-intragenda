@@ -8,11 +8,14 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 
+		type Role = 'admin' | 'teacher' | 'student';
+
 		interface User {
 		    id: number;
             email: string;
             name: string;
-            role: string;
+            role: Role;
+            formation: string;
             created_at: Date;
 		}
 	}

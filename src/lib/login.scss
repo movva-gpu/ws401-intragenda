@@ -1,0 +1,9 @@
+@use 'globals';
+
+label, input {
+    display: block;
+}
+
+label {
+    margin-bottom: globals.$sz-xs;
+}

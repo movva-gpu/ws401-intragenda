@@ -1,8 +1,8 @@
-import { createSecureServer } from 'http2';
+#!/usr/bin/env bun
+import { createSecureServer, createServer } from 'http2';
 import { handler } from './build/handler.js';
 import { config } from 'dotenv'
 import fs from 'fs';
-import { createServer } from 'http';
 
 config();
 
