@@ -12,7 +12,10 @@
 # Vite
 vite.config.ts.timestamp-*
 vite.config.js.timestamp-*
+.vite/
 
 # Docker
-
 /db/
+
+# Certs
+*.pem

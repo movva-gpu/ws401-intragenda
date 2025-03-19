@@ -2,7 +2,6 @@ import { createSecureServer } from 'http2';
 import { handler } from './build/handler.js';
 import { config } from 'dotenv'
 import fs from 'fs';
-import { exit } from 'process';
 
 config();
 
@@ -12,8 +11,11 @@ const options = {
 };
 
 const server = createSecureServer(options, handler);
-const port = 3333;
 
-server.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+server.addListener('request', (res) => {
+    console.log(res);
+});
+
+server.listen(3333, () => {
+    console.log('Server running on ::1:3333');
 });
