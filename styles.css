@@ -188,6 +188,228 @@ a {
 }
 
 
+        /* Styles spécifiques à la page d'administration */
+        .admin-controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn-add {
+            background-color: #5d4180;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .filter-controls select {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .devoir-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-edit, .btn-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .btn-edit {
+            color: #4d3570;
+        }
+        
+        .btn-delete {
+            color: #d9534f;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-save {
+            background-color: #5d4180;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .devoir-item {
+            transition: background-color 0.2s;
+        }
+        
+        .devoir-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .confirmation-modal .modal-content {
+            max-width: 400px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        
+        .tag.important {
+            background-color: #ffcccc;
+            color: #cc0000;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-active {
+            background-color: #4CAF50;
+        }
+        
+        .status-draft {
+            background-color: #FFC107;
+        }
+        
+        .priority-high {
+            border-left: 4px solid #d9534f;
+        }
+        
+        .priority-medium {
+            border-left: 4px solid #f0ad4e;
+        }
+        
+        .priority-low {
+            border-left: 4px solid #5bc0de;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #5d4180;
+        }
+        
+        .stat-label {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .stat-icon {
+            color: #5d4180;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+
 
 /* Style pour le modal du calendrier */
 .calendar-modal {
