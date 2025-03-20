@@ -5,6 +5,8 @@ export async function load({ url, cookies }) {
 
     const sessionToken = cookies.get('session');
 
+    if (!sessionToken || '' === sessionToken) return data;
+
     const user = await db.execute(
         `SELECT u.full_name AS name, u.email, u.role, f.name AS formation
         FROM users u
@@ -13,9 +15,9 @@ export async function load({ url, cookies }) {
         [sessionToken]
     );
 
-    if (user.length) {
-        return { user: user[0], ...data };
+    if (!user.length) {
+        return data;
     }
 
-    return data;
+    return { user: user[0], ...data };
 }
