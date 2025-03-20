@@ -14,7 +14,7 @@ function connectTransporter() {
 
     const { MAILER_PORT: port, MAILER_HOST: host, MAILER_AUTH: auth } = current_env;
 
-    if ('' !== auth) {
+    if (auth && '' !== auth) {
         const [ user, pass ] = auth.split(':');
 
         return createTransport({ host, port: parseInt(port), secure: false, auth: { user, pass } });
