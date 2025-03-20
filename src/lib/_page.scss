@@ -34,5 +34,13 @@ h1 {
 }
 
 button, input, textarea, select {
+    display: block;
+    border: 2px solid globals.$cl-title;
+    padding: globals.$sz-xxxs globals.$sz-xxs;
+    border-radius: globals.$sz-xs;
     font: inherit;
+}
+
+label, button, select {
+    cursor: pointer;
 }

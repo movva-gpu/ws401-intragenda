@@ -1,8 +1,9 @@
 <script>
-    import { faHome, faBook, faUniversity } from '@fortawesome/free-solid-svg-icons'
+    import { faHome, faBook, faUniversity, faLandMineOn, faUserTie } from '@fortawesome/free-solid-svg-icons'
     import { FontAwesomeIcon } from "fontawesome-svelte";
 
     export let active = '/';
+    export let isAdmin = false;
 
     const asideItems = [
         {
@@ -16,27 +17,39 @@
             route: '/homeworks'
         },
     ];
+
+    const activeExists = asideItems.find(item => item.route === active);
 </script>
 
-<aside class="sidebar">
-    <nav>
-        <ul>
-            <li>
-                <a href="/" class="sidebar__logo">
-                    <FontAwesomeIcon icon={faUniversity} />
-                </a>
-            </li>
-        {#each asideItems as item}
-            <li>
-                <a class="sidebar__item { active === item.route ? 'active' : '' }" href="{ item.route }">
-                    <FontAwesomeIcon icon={item.icon} />
-                    <span>{ item.name }</span>
-                </a>
-            </li>
-        {/each}
-        </ul>
-    </nav>
-</aside>
+{#if activeExists}
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/" class="sidebar__logo">
+                        <FontAwesomeIcon icon={faUniversity} />
+                    </a>
+                </li>
+            {#each asideItems as item}
+                <li>
+                    <a class="sidebar__item { active === item.route ? 'active' : '' }" href="{ item.route }">
+                        <FontAwesomeIcon icon={item.icon} />
+                        <span>{ item.name }</span>
+                    </a>
+                </li>
+            {/each}
+            {#if isAdmin}
+                <li>
+                    <a href="/admin" class="sidebar__item { active.startsWith('/admin') ? 'active' : '' }">
+                        <FontAwesomeIcon icon={faUserTie} />
+                        <span>Admin</span>
+                    </a>
+                </li>
+            {/if}
+            </ul>
+        </nav>
+    </aside>
+{/if}
 
 <style lang="scss">
     @use '$lib/globals';

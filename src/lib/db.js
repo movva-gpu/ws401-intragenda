@@ -6,10 +6,16 @@ import { createConnection } from "mariadb";
 export var db = null;
 
 export async function connect() {
-    config();
+    let current_env = env;
+    if (!('MARIADB_DATABASE' in current_env)) {
+        if (!('MARIADB_DATABASE' in process.env)) config();
+        current_env = process.env;
+    }
+
     db = await createConnection(
-        `mariadb://${env.MARIADB_USER || process.env.MARIADB_USER}:${env.MARIADB_PASSWORD || process.env.MARIADB_PASSWORD}@127.0.0.1:3306/${env.MARIADB_DATABASE || process.env.MARIADB_DATABASE}?serverVersion=10.4.34-MariaDB&charset=utf8mb4`
+        `mariadb://${current_env.MARIADB_USER}:${current_env.MARIADB_PASSWORD}@127.0.0.1:3306/${current_env.MARIADB_DATABASE}?serverVersion=10.4.34-MariaDB&charset=utf8mb4`
     );
+    console.info('info: Connected to database successfully');
 }
 
 export async function createSchemas() {
@@ -26,12 +32,18 @@ export async function createSchemas() {
     );`);
     await db.query(`CREATE TABLE IF NOT EXISTS users (
         id            INT          PRIMARY KEY AUTO_INCREMENT,
-        full_name     VARCHAR(64)  NOT NULL,
+        full_name     VARCHAR(64)  NOT NULL UNIQUE,
         password_hash VARCHAR(255) NOT NULL,
-        email         VARCHAR(255) NOT NULL,
+        email         VARCHAR(255) NOT NULL UNIQUE,
         role          VARCHAR(10)  NOT NULL,
         formation_id  INT          NOT NULL,
         created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );`);
+    await db.query(`CREATE TABLE IF NOT EXISTS connected_users (
+        token     VARCHAR(40) PRIMARY KEY,
+        user_id   INT         NOT NULL,
+        expires   TIMESTAMP   NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL 1 WEEK),
+        created_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
     );`);
     await db.query(`CREATE TABLE IF NOT EXISTS homeworks (
         id          INT          PRIMARY KEY AUTO_INCREMENT,
@@ -247,4 +259,5 @@ export async function createSchemas() {
         ('R602 - Développement Web et dispositif interactif - S6 DEV FI', 15),
         ('R602 - Développement Web et dispositif interactif - S6 DEV FC', 16) ON DUPLICATE KEY UPDATE id=id;
     `);
+   console.info('info: Created database schemas successfully');
 }
