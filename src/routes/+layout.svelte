@@ -25,7 +25,7 @@
     }
 </script>
 
-<Sidebar active={data.path ?? '/'} isAdmin={'admin' === data.user.role} />
+<Sidebar active={'path' in data && data.path ? data.path : '/'} isAdmin={'user' in data && 'role' in data.user && 'admin' === data.user.role} />
 <main>
     <div class="info" bind:this={info}>{@html message(data.reason)}</div>
     {@render children()}
