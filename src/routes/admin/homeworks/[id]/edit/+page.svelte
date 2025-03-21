@@ -2,38 +2,30 @@
     let { data } = $props();
 </script>
 
-{#if !('user' in data) || !('formations' in data)}
+{#if !('homeworks' in data) }
     <p>Unreachable</p>
 {:else}
 <form method="POST" class="form-container">
     <label>
-        Nom complet :
-        <input type="text" value={data.user.full_name} name="full_name" required />
+        Titre du devoir :
+        <input type="text" value={data.homeworks.title} name="title" required />
     </label>
 
     <label>
-        Email :
-        <input type="email" value={data.user.email} name="mail" required />
+        Description :
+        <input type="text" value={data.homeworks.description} name="description" required />
     </label>
-
     <label>
-        Rôle :
-        <select value={data.user.role} name="role" required>
-            <option value="">--Choisir un rôle</option>
-            <option value="admin">Admin</option>
-            <option value="teacher">Prof</option>
-            <option value="student">Élève</option>
-        </select>
+        User id :
+        <input type="text" value={data.homeworks.user_id} name="user_id" required />
     </label>
-    
     <label>
-        Formation :
-        <select value={data.user.formation_id} name="formation" required>
-            <option value="">--Choisir une formation</option>
-            {#each data.formations as formation}
-                <option value={formation.id}>{formation.name}</option>
-            {/each}
-        </select>
+        Subject id :
+        <input type="text" value={data.homeworks.subject_id} name="subject_id" required />
+    </label>
+    <label>
+        Due Date :
+        <input type="datetime-local" value={data.homeworks.due_date.toISOString().replace(/\..*Z$/, '')} name="due_date" required />
     </label>
 
     <button type="submit">Modifier</button>
