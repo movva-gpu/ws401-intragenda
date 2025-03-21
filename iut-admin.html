@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Département MMI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a href="iut-dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <a href="iut-devoirs.html">
+                <i class="fas fa-book"></i>
+                <span>Devoirs</span>
+            </a>
+        </div>
+        <div class="sidebar-item active">
+            <a href="iut-admin-devoirs.html">
+                <i class="fas fa-cog"></i>
+                <span>Admin</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1 class="header-title">Département MMI</h1>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher..." id="search-input">
+                    <span>Ctrl+K</span>
+                </div>
+            </div>
+            <div class="header-tools">
+                <div class="icon" id="calendar-button">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <a href="iut-login-page.html">
+                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                </a>
+                <div class="icon"><i class="fas fa-bell"></i></div>
+                <div class="icon"><i class="fas fa-user"></i></div>
+                <div class="icon"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2 class="content-title">Administration des devoirs</h2>
+            <div class="breadcrumb">
+                <i class="fas fa-home"></i>
+                <span>Administration</span> / 
+                <span>Gestion des devoirs</span>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="stat-number" id="total-devoirs">3</div>
+                    <div class="stat-label">Total des devoirs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-number" id="devoirs-ce-mois">2</div>
+                    <div class="stat-label">Devoirs ce mois</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-number" id="devoirs-prioritaires">1</div>
+                    <div class="stat-label">Priorité haute</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-number" id="devoirs-completes">0</div>
+                    <div class="stat-label">Devoirs complétés</div>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="admin-controls">
+                <button class="btn-add" id="btn-add-devoir">
+                    <i class="fas fa-plus"></i> Ajouter un devoir
+                </button>
+                <div class="filter-controls">
+                    <select id="filter-module">
+                        <option value="">Tous les modules</option>
+                        <option value="M1106">M1106 - Intégration web</option>
+                        <option value="M2203">M2203 - Programmation client</option>
+                        <option value="M3202">M3202 - Base de données avancées</option>
+                    </select>
+                    <select id="filter-priority">
+                        <option value="">Toutes les priorités</option>
+                        <option value="high">Haute</option>
+                        <option value="medium">Moyenne</option>
+                        <option value="low">Basse</option>
+                    </select>
+                    <select id="filter-status">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actif</option>
+                        <option value="draft">Brouillon</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Devoirs list -->
+            <div class="devoirs-list" id="devoirs-list">
+                <!-- Les devoirs seront générés dynamiquement par JavaScript -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-copyright">
+                Copyright © MMI Troyes 2025 All rights reserved | Version 1.1
+            </div>
+            <div class="footer-links">
+                <a href="#">Aide</a> / 
+                <a href="#">Données personnelles</a> / 
+                <a href="#">À propos</a> / 
+                <a href="#">Mentions légales</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal d'ajout/modification de devoir -->
+    <div class="modal" id="devoir-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-title">Ajouter un devoir</div>
+                <div class="modal-close" id="modal-close">&times;</div>
+            </div>
+            <form id="devoir-form">
+                <input type="hidden" id="devoir-id">
+                <div class="form-group">
+                    <label for="devoir-title">Titre</label>
+                    <input type="text" id="devoir-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="devoir-module">Module</label>
+                    <select id="devoir-module" required>
+                        <option value="M1106">M1106 - Intégration web</option>
+                        <option value="M2203">M2203 - Programmation client</option>
+                        <option value="M3202">M3202 - Base de données avancées</option>
+                        <option value="other">Autre...</option>
+                    </select>
+                </div>
+                <div class="form-group" id="other-module-group" style="display: none;">
+                    <label for="devoir-other-module">Spécifier le module</label>
+                    <input type="text" id="devoir-other-module">
+                </div>
+                <div class="form-group">
+                    <label for="devoir-date">Date de rendu</label>
+                    <input type="date" id="devoir-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="devoir-description">Description</label>
+                    <textarea id="devoir-description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="devoir-priority">Priorité</label>
+                    <select id="devoir-priority">
+                        <option value="low">Basse</option>
+                        <option value="medium">Moyenne</option>
+                        <option value="high">Haute</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="devoir-status">Statut</label>
+                    <select id="devoir-status">
+                        <option value="active">Actif</option>
+                        <option value="draft">Brouillon</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="btn-cancel">Annuler</button>
+                    <button type="submit" class="btn-save">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal confirmation-modal" id="confirmation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Confirmer la suppression</div>
+                <div class="modal-close" id="confirmation-close">&times;</div>
+            </div>
+            <p>Êtes-vous sûr de vouloir supprimer ce devoir ? Cette action est irréversible.</p>
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" id="btn-cancel-delete">Annuler</button>
+                <button type="button" class="btn-save" id="btn-confirm-delete">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendrier Modal -->
+    <div class="calendar-modal" id="calendar-modal">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-title">Calendrier des devoirs</div>
+                <div class="calendar-close" id="calendar-close">&times;</div>
+            </div>
+            <div class="calendar-navigation">
+                <button class="calendar-nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i> Mois précédent
+                </button>
+                <div class="calendar-month-year" id="calendar-month-year">Mars 2025</div>
+                <button class="calendar-nav-btn" id="next-month">
+                    Mois suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Le calendrier sera généré par JavaScript -->
+            </div>
+            <div class="calendar-events-list" id="calendar-events-list">
+                <h3>Prochains événements</h3>
+                <!-- La liste des événements sera générée par JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+    <script src="calendar-script.js"></script>
+</body>
+</html>

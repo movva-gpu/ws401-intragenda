@@ -44,3 +44,8 @@ button, input, textarea, select {
 label, button, select {
     cursor: pointer;
 }
+
+hr {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
