@@ -2,17 +2,17 @@
     let { data } = $props();    
 </script>
 
-{#if data && 'users' in data}
+{#if data && 'formations' in data}
     <h1>Users</h1>
-    {#if data.users.length === 0}
-        <p>No users</p>
+    {#if data.formations.length === 0}
+        <p>No formations</p>
     {:else}
         <ul>
-            {#each data.users as user}
+            {#each data.formations as formations}
                 <li>
-                    {user.full_name} en {data.formations[user.formation_id - 1].name} -
-                    <a href="/admin/users/{user.id}/edit/">Modifier</a>
-                    <a href="/admin/users/{user.id}/del/">Supprimer</a>
+                    {formations.name}
+                    <a href="/admin/formations/{formations.id}/edit/">Modifier</a>
+                    <a href="/admin/formations/{formations.id}/del/">Supprimer</a>
                 </li>
             {/each}
         </ul>
