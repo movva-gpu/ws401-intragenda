@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 import { createSecureServer, createServer } from 'http2';
 import { handler } from './build/handler.js';
 import { config } from 'dotenv'
