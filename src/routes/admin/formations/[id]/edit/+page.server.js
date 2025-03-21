@@ -18,12 +18,13 @@ export const actions = {
             return fail(400, { field: 'name', message: 'Le nom complet est requis' });
         }
 
-        await db.query(
+        const err = await db.query(
             `UPDATE formations SET name = ? WHERE id = ?`,
             [name, params.id],
         ).catch((error) => {
             return fail(500, { message: error.message });
         });
+        if (isActionFailure(err)) return err;
 
         return redirect(303, '/admin/formations');
     }

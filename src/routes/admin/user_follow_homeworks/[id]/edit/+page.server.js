@@ -26,12 +26,13 @@ export const actions = {
             return fail(400, { field: 'formation', message: 'La formation est requise' });
         }
 
-        await db.query(
+        const err = await db.query(
             `UPDATE users SET full_name = ?, email = ?, role = ?, formation_id = ? WHERE id = ?`,
             [full_name, mail, role, formation, params.id],
         ).catch((error) => {
             return fail(500, { message: error.message });
         });
+        if (isActionFailure(err)) return err;
 
         return redirect(303, '/admin/users');
     }

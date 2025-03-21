@@ -1,39 +1,40 @@
 import { db } from '$lib/db';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, isActionFailure, redirect } from '@sveltejs/kit';
 
 export async function load({ params }) {
-    const [ user ] = await db.execute('SELECT * FROM users WHERE id = ?', [params.id]);
+    const [ homeworks ] = await db.execute('SELECT * FROM homeworks WHERE id = ?', [params.id]);
 
-    if (!user) redirect(307, '/admin/users');
+    if (!homeworks) redirect(307, '/admin/homeworks');
 
-    const formations = await db.execute('SELECT * FROM formations');
-
-    return { user, formations };
+    return { homeworks };
 }
 
 export const actions = {
     default: async ({ request, params }) => {
         const data = await request.formData();
-        const { full_name, mail, role, formation } = Object.fromEntries(data);
+        const { title, description, user_id, subject_id, due_date } = Object.fromEntries(data);
         
-        if (!full_name) {
-            return fail(400, { field: 'full_name', message: 'Le nom complet est requis' });
-        } else if (!mail) {
-            return fail(400, { field: 'mail', message: 'L\'adresse email est requise' });
-        } else if (!role) {
-            return fail(400, { field: 'role', message: 'Le rôle est requis' });
-        } else if (!formation) {
-            return fail(400, { field: 'formation', message: 'La formation est requise' });
+        if (!title) {
+            return fail(400, { field: 'title', message: 'Le nom complet est requis' });
+        } else if (!description) {
+            return fail(400, { field: 'description', message: 'La description est requiss' });
+        } else if (!user_id) {
+            return fail(400, { field: 'user_id', message: 'L\'utilisateur est requis' });
+        } else if (!subject_id) {
+            return fail(400, { field: 'subject_id', message: 'Le sujet est requis' });
+        } else if (!due_date) {
+            return fail(400, { field: 'due_date', message: 'La date de fin est requise' });
         }
 
-        await db.query(
-            `UPDATE users SET full_name = ?, email = ?, role = ?, formation_id = ? WHERE id = ?`,
-            [full_name, mail, role, formation, params.id],
+        const err = await db.query(
+            `UPDATE homeworks SET title = ?, description = ?, user_id = ?, subject_id = ?, due_date = ? WHERE id = ?`,
+            [title, description, user_id, subject_id, due_date, params.id],
         ).catch((error) => {
             return fail(500, { message: error.message });
         });
+        if (isActionFailure(err)) return err;
 
-        return redirect(303, '/admin/users');
+        return redirect(303, '/admin/homeworks');
     }
 }
 

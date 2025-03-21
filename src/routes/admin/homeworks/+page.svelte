@@ -2,20 +2,32 @@
     let { data } = $props();    
 </script>
 
-{#if data && 'users' in data}
-    <h1>Users</h1>
-    {#if data.users.length === 0}
-        <p>No users</p>
+{#if data && 'homeworks' in data}
+    <h1>Homeworks</h1>
+    {#if data.homeworks.length === 0}
+        <p>No homeworks</p>
     {:else}
-        <ul>
-            {#each data.users as user}
-                <li>
-                    {user.full_name} en {data.formations[user.formation_id - 1].name} -
-                    <a href="/admin/users/{user.id}/edit/">Modifier</a>
-                    <a href="/admin/users/{user.id}/del/">Supprimer</a>
-                </li>
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Date de remise</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {#each data.homeworks as homeworks}
+                <tbody>
+                    <tr>
+                    <td>{homeworks.title}</td>
+                    <td>{homeworks.due_date}</td>
+                    <td>
+                    <a href="/admin/homeworks/{homeworks.id}/edit/">Modifier</a>
+                    <a href="/admin/homeworks/{homeworks.id}/del/">Supprimer</a>
+                    </td>
+                    </tr>
+                </tbody>
             {/each}
-        </ul>
+            </table>
     {/if}
 {:else}
     <p>Wtf</p>

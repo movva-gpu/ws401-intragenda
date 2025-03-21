@@ -3,19 +3,26 @@
 </script>
 
 {#if data && 'formations' in data}
-    <h1>Users</h1>
+    <h1>Formations</h1>
     {#if data.formations.length === 0}
         <p>No formations</p>
     {:else}
-        <ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
             {#each data.formations as formations}
-                <li>
-                    {formations.name}
-                    <a href="/admin/formations/{formations.id}/edit/">Modifier</a>
-                    <a href="/admin/formations/{formations.id}/del/">Supprimer</a>
-                </li>
+                   <tr><td> {formations.name} </td>
+                    <td><a href="/admin/formations/{formations.id}/edit/">Modifier</a>
+                    <a href="/admin/formations/{formations.id}/del/">Supprimer</a></td></tr>
             {/each}
-        </ul>
+            </tbody>
+            </table>
     {/if}
 {:else}
     <p>Wtf</p>
