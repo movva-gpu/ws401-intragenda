@@ -1,5 +1,5 @@
 import { db } from '$lib/db';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, isActionFailure, redirect } from '@sveltejs/kit';
 
 export async function load({ params }) {
     const [ formations ] = await db.execute('SELECT * FROM formations WHERE id = ?', [params.id]);
@@ -13,7 +13,7 @@ export const actions = {
     default: async ({ request, params }) => {
         const data = await request.formData();
         const { name } = Object.fromEntries(data);
-        
+
         if (!name) {
             return fail(400, { field: 'name', message: 'Le nom complet est requis' });
         }
@@ -36,9 +36,9 @@ export const actions = {
 
 //     try {
 //         await db.query(`
-//             UPDATE users SET 
-//             full_name = ?, email = ?, role = ?, formation_id = ? 
-//             WHERE id = ?`, 
+//             UPDATE users SET
+//             full_name = ?, email = ?, role = ?, formation_id = ?
+//             WHERE id = ?`,
 //             [full_name, email, role, formation_id, id]
 //         );
 

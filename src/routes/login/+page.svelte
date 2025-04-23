@@ -94,14 +94,14 @@
                             name={field.name}
                             type={field.type}
                             required={field.required}
-                        />
+                       >
                         <small>{form.msg}</small>
                     {:else}
                         <input
                             name={field.name}
                             type={field.type}
                             required={field.required}
-                        />
+                       >
                     {/if}
                 </label>
             {/each}
@@ -118,14 +118,14 @@
                             name={field.name}
                             type={field.type}
                             required={field.required}
-                        />
+                       >
                         <small>{form.msg}</small>
                     {:else}
                         <input
                             name={field.name}
                             type={field.type}
                             required={field.required}
-                        />
+                       >
                     {/if}
                 </label>
             {/each}
@@ -152,7 +152,7 @@
 
     <p class="login__support">
         En cas de problème de connexion, contacter le support
-        <br />à cette adresse :
+        <br>à cette adresse :
         <a href="mailto:intranet.iut-troyes@univ-reims.fr" class="login__support__email"
             >intranet.iut-troyes@univ-reims.fr</a
         >

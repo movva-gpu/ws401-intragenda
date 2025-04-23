@@ -1,9 +1,10 @@
 <script>
-    import { faHome, faBook, faUniversity, faLandMineOn, faUserTie } from '@fortawesome/free-solid-svg-icons'
+    import { faHome, faBook, faUniversity, faLandMineOn, faUserTie, faSearch } from '@fortawesome/free-solid-svg-icons'
     import { FontAwesomeIcon } from "fontawesome-svelte";
+    import { onMount } from 'svelte';
+    import { slide } from 'svelte/transition';
 
-    export let active = '/';
-    export let isAdmin = false;
+    let { active = '/', isAdmin = false, searchShown = false } = $props()
 
     const asideItems = [
         {
@@ -17,54 +18,61 @@
             route: '/homeworks'
         },
     ];
-
-    const activeExists = asideItems.find(item => item.route === active);
 </script>
 
-{#if activeExists}
-    <aside class="sidebar">
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" class="sidebar__logo">
-                        <FontAwesomeIcon icon={faUniversity} />
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li>
+                <a href="/" class="sidebar__logo">
+                    <FontAwesomeIcon icon={faUniversity} />
+                </a>
+            </li>
+            {#if searchShown}
+                <li transition:slide={{ duration: 300, axis: 'x' }}>
+                    <a href="#" title="Searching" class="sidebar__item active">
+                        <FontAwesomeIcon icon={faSearch} />
+                        <span>Searching</span>
                     </a>
                 </li>
+            {/if}
             {#each asideItems as item}
-                <li>
-                    <a class="sidebar__item { active === item.route ? 'active' : '' }" href="{ item.route }">
+                <li transition:slide={{ duration: 300, axis: 'x' }}>
+                    <a href={item.route} title={item.name} class="sidebar__item {active === item.route && !searchShown ? 'active' : ''}">
                         <FontAwesomeIcon icon={item.icon} />
-                        <span>{ item.name }</span>
+                        <span>{item.name}</span>
                     </a>
                 </li>
             {/each}
             {#if isAdmin}
-                <li>
-                    <a href="/admin" class="sidebar__item { active.startsWith('/admin') ? 'active' : '' }">
+                <li transition:slide={{ duration: 300, axis: 'x' }}>
+                    <a href="/admin" title="Admin" class="sidebar__item {active.startsWith('/admin') ? 'active' : ''}">
                         <FontAwesomeIcon icon={faUserTie} />
                         <span>Admin</span>
                     </a>
                 </li>
             {/if}
-            </ul>
-        </nav>
-    </aside>
-{/if}
+        </ul>
+    </nav>
+</aside>
 
 <style lang="scss">
     @use '$lib/globals';
     @use 'sass:color';
 
     .sidebar {
+        position: relative;
+
         display: flex;
         flex-direction: column;
 
         width: 100px;
+        padding-top: globals.$sz-header;
 
         background-color: globals.$cl-sec;
         color: white;
 
-        box-shadow: 0 0 8px #ffffff1a;
+        box-shadow: globals.$shadow;
         user-select: none;
 
         &__item {
@@ -114,9 +122,16 @@
         }
 
         &__logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+
             background: #fff;
             color: globals.$cl-sec;
-            height: 4em;
+            height: globals.$sz-header;
+
+            z-index: 10;
         }
     }
 </style>

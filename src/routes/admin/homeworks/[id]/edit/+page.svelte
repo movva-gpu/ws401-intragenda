@@ -8,24 +8,24 @@
 <form method="POST" class="form-container">
     <label>
         Titre du devoir :
-        <input type="text" value={data.homeworks.title} name="title" required />
+        <input type="text" value={data.homeworks.title} name="title" required>
     </label>
 
     <label>
         Description :
-        <input type="text" value={data.homeworks.description} name="description" required />
+        <input type="text" value={data.homeworks.description} name="description" required>
     </label>
     <label>
         User id :
-        <input type="text" value={data.homeworks.user_id} name="user_id" required />
+        <input type="text" value={data.homeworks.user_id} name="user_id" required>
     </label>
     <label>
         Subject id :
-        <input type="text" value={data.homeworks.subject_id} name="subject_id" required />
+        <input type="text" value={data.homeworks.subject_id} name="subject_id" required>
     </label>
     <label>
         Due Date :
-        <input type="datetime-local" value={data.homeworks.due_date.toISOString().replace(/\..*Z$/, '')} name="due_date" required />
+        <input type="datetime-local" value={data.homeworks.due_date.toISOString().replace(/\..*Z$/, '')} name="due_date" required>
     </label>
 
     <button type="submit">Modifier</button>

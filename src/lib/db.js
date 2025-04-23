@@ -56,6 +56,7 @@ export async function createSchemas() {
         created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
     );`);
     await db.query(`CREATE TABLE IF NOT EXISTS user_follow_homeworks (
+        id          INT       PRIMARY KEY AUTO_INCREMENT,
         user_id     INT       NOT NULL,
         homework_id INT       NOT NULL,
         done        BOOLEAN   NOT NULL DEFAULT FALSE,

@@ -22,6 +22,7 @@ export async function load({ cookies }) {
     }
 
     const formations = await db.execute("SELECT * FROM formations");
+
     return { formations };
 }
 
@@ -44,7 +45,6 @@ export const actions = {
         }
 
         const hash = hashSync(password, genSaltSync());
-        console.log(hash);
         const user = await db
             .execute(`SELECT * FROM users u WHERE u.email = ?`, [mail])
             .catch((err) => {

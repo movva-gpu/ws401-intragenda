@@ -8,12 +8,12 @@
 <form method="POST" class="form-container">
     <label>
         Nom complet :
-        <input type="text" value={data.user.full_name} name="full_name" required />
+        <input type="text" value={data.user.full_name} name="full_name" required>
     </label>
 
     <label>
         Email :
-        <input type="email" value={data.user.email} name="mail" required />
+        <input type="email" value={data.user.email} name="mail" required>
     </label>
 
     <label>
@@ -25,7 +25,7 @@
             <option value="student">Élève</option>
         </select>
     </label>
-    
+
     <label>
         Formation :
         <select value={data.user.formation_id} name="formation" required>

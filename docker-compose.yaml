@@ -10,3 +10,11 @@ services:
             - 3306:3306
         volumes:
             - ./db:/var/lib/mysql
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: db
+            PMA_USER: ws404
+            PMA_PASSWORD: password
+        ports:
+            - 8401:80

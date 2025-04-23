@@ -4,18 +4,29 @@
 
     import '$lib/app.scss';
     import Sidebar from '$lib/components/Sidebar.svelte';
+    import Header from '$lib/components/Header.svelte';
+    import Calendar from '../lib/components/Calendar.svelte';
+    import DevoirList from '../lib/components/DevoirList.svelte';
+    import { crossfade, fade, slide } from 'svelte/transition';
 
     let { children, data } = $props();
 
     /** @type {HTMLDivElement} */
-    let info;
+    let info = $state();
 
-    onMount(() => setTimeout(() => {
-        if (data.reason) {
+    /** @type {HTMLButtonElement} */
+    let calendarButton = $state();
+
+    /** @type {HTMLInputElement} */
+    let search = $state();
+    let searchValue = $state();
+
+    if (data && data.reason) {
+        onMount(() => setTimeout(() => {
             info.className += ' bye';
-            setTimeout(() => window.location.href = new URL(window.location.href).origin, 333);
-        }
-    }, 5000));
+            setTimeout(() => { if (window.location.href != '/') window.location.href = new URL(window.location.href).origin; }, 333);
+        }, 5000));
+    }
 
     function message(reason) {
         switch (reason) {
@@ -23,15 +34,79 @@
             case 'registered': return 'Votre compte a été créé avec succès&nbsp;!';
         }
     }
+
+    let searchShown = $state(false);
+    onMount(() => {
+        if (search) {
+            search.addEventListener('focus', () => {
+                searchShown = true;
+            });
+            search.addEventListener('blur', () => {
+                if (searchValue === '') searchShown = false;
+            });
+            search.addEventListener('input', () => {
+                searchValue = search.value;
+            });
+        }
+    });
 </script>
 
-<Sidebar active={'path' in data && data.path ? data.path : '/'} isAdmin={'user' in data && 'role' in data.user && 'admin' === data.user.role} />
+<Sidebar
+    active={'path' in data && data.path ? data.path : '/'}
+    isAdmin={'user' in data && 'role' in data.user && 'admin' === data.user.role}
+    searchShown={searchShown}
+/>
 <main>
+    {#if data.user && 'name' in data.user}
+        <Header user={data.user.name} bind:calendarButton bind:search />
+        <Calendar calendarButton={calendarButton} devoirs={data.user.homeworks} />
+    {/if}
     <div class="info" bind:this={info}>{@html message(data.reason)}</div>
-    {@render children()}
+    {#if searchShown}
+        <div class="search">
+            <h1>Recherche de devoirs</h1>
+            <h2>Devoirs suivis</h2>
+            <DevoirList homeworks={data.user.homeworks.filter(homework => searchValue !== '' && (
+                homework.title.includes(searchValue) ||
+                homework.description.includes(searchValue) ||
+                homework.creator_name.includes(searchValue)
+            ))} defaultMsg="Aucun devoir suivis trouvé." />
+            <hr>
+            <h2>Devoirs non suivis</h2>
+            <DevoirList homeworks={data.homeworks.filter(homework => searchValue !== '' && (
+                homework.title.includes(searchValue) ||
+                homework.description.includes(searchValue) ||
+                homework.creator_name.includes(searchValue)
+            ))} defaultMsg="Aucun devoir non-suivis trouvé." />
+        </div>
+    {:else}
+        <div>
+            {@render children()}
+        </div>
+    {/if}
 </main>
 
-<style>
+<style lang="scss">
+    @use '$lib/globals';
+
+    :global(h1) {
+        color: globals.$cl-text;
+        padding-bottom: globals.$sz-sm;
+    }
+
+    main {
+        padding: globals.$sz-lg;
+        padding-top: globals.$sz-header + globals.$sz-lg;
+
+        position: relative;
+    }
+
+    .search {
+        position: absolute;
+        inset: globals.$sz-lg;
+        top: globals.$sz-header + globals.$sz-lg;
+    }
+
     .info {
         transition: opacity 333ms;
         &:global(.bye) {
