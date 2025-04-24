@@ -1,18 +1,23 @@
 <script>
-    let { data } = $props();    
+    let { data } = $props();
 </script>
 
-{#if data && 'users' in data}
-    <h1>Users</h1>
-    {#if data.users.length === 0}
-        <p>No users</p>
+{#if data && 'subjects' in data}
+    <div class="header">
+        <h1>Subjects</h1>
+        <a href="/admin/subjects/add" class="add-button">Ajouter</a>
+    </div>
+    
+    {#if data.subjects.length === 0}
+        <p>No subjects</p>
     {:else}
         <ul>
-            {#each data.users as user}
+            {#each data.subjects as subjects}
                 <li>
-                    {user.full_name} en {data.formations[user.formation_id - 1].name} -
-                    <a href="/admin/users/{user.id}/edit/">Modifier</a>
-                    <a href="/admin/users/{user.id}/del/">Supprimer</a>
+                    {subjects.id} - 
+                    {subjects.name} en {data.subjects[subjects.formation_id - 1].name} -
+                    <a href="/admin/subjects/{subjects.id}/edit/">Modifier</a>
+                    <a href="/admin/subjects/{subjects.id}/del/">Supprimer</a>
                 </li>
             {/each}
         </ul>
@@ -20,3 +25,26 @@
 {:else}
     <p>Wtf</p>
 {/if}
+
+<style>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-button:hover {
+        background-color: #45a049;
+    }
+</style>

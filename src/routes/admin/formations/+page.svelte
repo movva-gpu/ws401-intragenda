@@ -1,29 +1,49 @@
 <script>
-    let { data } = $props();    
+    export let data;
 </script>
 
 {#if data && 'formations' in data}
-    <h1>Formations</h1>
+    <div class="header">
+        <h1>Formations</h1>
+        <a href="/admin/formations/add" class="add-button">Ajouter</a>
+    </div>
+
     {#if data.formations.length === 0}
         <p>No formations</p>
     {:else}
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            {#each data.formations as formations}
-                   <tr><td> {formations.name} </td>
-                    <td><a href="/admin/formations/{formations.id}/edit/">Modifier</a>
-                    <a href="/admin/formations/{formations.id}/del/">Supprimer</a></td></tr>
+        <ul>
+            {#each data.formations as formation}
+                <li>
+                    {formation.id} - {formation.name} - 
+                    <a href="/admin/formations/{formation.id}/edit/">Modifier</a>
+                    <a href="/admin/formations/{formation.id}/del/">Supprimer</a>
+                </li>
             {/each}
-            </tbody>
-            </table>
+        </ul>
     {/if}
 {:else}
-    <p>Wtf</p>
+    <p>Erreur de données</p>
 {/if}
+
+<style>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-button:hover {
+        background-color: #45a049;
+    }
+</style>

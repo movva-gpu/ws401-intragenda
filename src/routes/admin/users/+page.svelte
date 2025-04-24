@@ -1,34 +1,70 @@
 <script>
-    let { data } = $props();    
+    export let data;
 </script>
 
 {#if data && 'users' in data}
-    <h1>Users</h1>
+    <div class="header">
+        <h1>Utilisateurs</h1>
+        <a href="/admin/users/add" class="add-button">Ajouter</a>
+    </div>
+    
     {#if data.users.length === 0}
         <p>No users</p>
     {:else}
-        <table>
-            <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Formation</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+        <ul>
             {#each data.users as user}
-            <tbody>
-                <tr>
-                    <td>{user.full_name} </td> 
-                    <td>{data.formations[user.formation_id - 1].name}</td>
-                    <td>
+                <li>
+                    {user.id} - 
+                    {user.full_name} - 
+                    {user.email} - 
                     <a href="/admin/users/{user.id}/edit/">Modifier</a>
                     <a href="/admin/users/{user.id}/del/">Supprimer</a>
-                    </td>
-                </tr>
-            </tbody>
+                </li>
             {/each}
-            </table>
+        </ul>
     {/if}
 {:else}
-    <p>Wtf</p>
+    <p>Impossible de charger les utilisateurs.</p>
 {/if}
+
+<style>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-button:hover {
+        background-color: #45a049;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin: 10px 0;
+    }
+
+    a {
+        margin-left: 10px;
+        text-decoration: none;
+        color: #007BFF;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>

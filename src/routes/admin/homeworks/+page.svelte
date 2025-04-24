@@ -1,34 +1,53 @@
 <script>
-    let { data } = $props();    
+    let { data } = $props();
 </script>
 
 {#if data && 'homeworks' in data}
-    <h1>Homeworks</h1>
+    <div class="header">
+        <h1>Devoirs</h1>
+        <a href="/admin/homeworks/add" class="add-button">Ajouter</a>
+    </div>
+    
     {#if data.homeworks.length === 0}
         <p>No homeworks</p>
     {:else}
-        <table>
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Date de remise</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            {#each data.homeworks as homeworks}
-                <tbody>
-                    <tr>
-                    <td>{homeworks.title}</td>
-                    <td>{homeworks.due_date}</td>
-                    <td>
-                    <a href="/admin/homeworks/{homeworks.id}/edit/">Modifier</a>
-                    <a href="/admin/homeworks/{homeworks.id}/del/">Supprimer</a>
-                    </td>
-                    </tr>
-                </tbody>
+        <ul>
+            {#each data.homeworks as homework}
+                <li>
+                    {homework.id} - 
+                    {homework.title} - 
+                    {homework.description} - 
+                    {data.homeworks[homework.subject_id - 1]?.name} - 
+                    {homework.due_date} -
+                    <a href="/admin/homeworks/{homework.id}/edit/">Modifier</a>
+                    <a href="/admin/homeworks/{homework.id}/del/">Supprimer</a>
+                </li>
             {/each}
-            </table>
+        </ul>
     {/if}
 {:else}
-    <p>Wtf</p>
+    <p>Erreur de données</p>
 {/if}
+
+<style>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-button:hover {
+        background-color: #45a049;
+    }
+</style>

@@ -1,14 +1,14 @@
 <script>
-    let { data } = $props();
+    export let data;
 </script>
 
-{#if !('subjects' in data) || !('formations' in data)}
+{#if !('formations' in data)}
     <p>Unreachable</p>
 {:else}
 <form method="POST" class="form-container">
     <label>
         Nom :
-        <input type="text" name="name" value={data.subjects.name} required />
+        <input type="text" name="name" required />
     </label>
     
     <label>
@@ -16,17 +16,14 @@
         <select name="formation_id" required>
             <option value="">--Choisir une formation</option>
             {#each data.formations as formation}
-                <option
-                    value={formation.id}
-                    selected={formation.id === data.subjects.formation_id}
-                >
+                <option value={formation.id}>
                     {formation.name}
                 </option>
             {/each}
         </select>
     </label>
 
-    <button type="submit">Modifier</button>
+    <button type="submit">Ajouter</button>
 </form>
 {/if}
 
