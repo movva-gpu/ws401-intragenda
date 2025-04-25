@@ -1,6 +1,6 @@
 <script>
    	import { page } from '$app/state';
-    import Breadcrumb from '../lib/components/Breadcrumb.svelte';
+    import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 
     const messages = {
         400: "Requête incorrecte ou mal formée",

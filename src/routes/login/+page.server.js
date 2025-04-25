@@ -44,7 +44,6 @@ export const actions = {
             }
         }
 
-        const hash = hashSync(password, genSaltSync());
         const user = await db
             .execute(`SELECT * FROM users u WHERE u.email = ?`, [mail])
             .catch((err) => {

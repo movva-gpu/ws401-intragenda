@@ -3,6 +3,7 @@
 
     import Breadcrumb from "$lib/components/Breadcrumb.svelte";
     import { FontAwesomeIcon } from 'fontawesome-svelte';
+    import DevoirList from '$lib/components/DevoirList.svelte';
 
     let { data = { user: { homeworks: [] } } } = $props();
 
@@ -16,10 +17,14 @@
         const inOneDay = now + oneDayInMs;
         return h.dueDate > now && h.dueDate <= inOneDay;
     }));
+    const isHomeworkLate = (homework) => homework.due_date.valueOf() < Date.now();
+    const lateHomeworks = $derived(data.user.homeworks.filter(isHomeworkLate));
 
     const someActiveHomeworks = $derived(activeHomeworks.slice(0, 5));
+    const someDoneHomeworks = $derived(doneHomeworks.slice(0, 5));
 
-    let areHomeworksExpended = $state(false);
+    let areActiveHomeworksExpended = $state(false);
+    let areDoneHomeworksExpended = $state(false);
 </script>
 
 <h1>Tableau de bord</h1>
@@ -32,19 +37,24 @@
 {:else}
     <div class="stats-cards">
         <div class="stat-card">
-            <FontAwesomeIcon size="xl" icon={faBookOpen} />
+            <FontAwesomeIcon size="xl" icon={faBookOpen} fixedWidth />
             <div class="stat-card__label">Devoirs en cours</div>
             <div class="stat-card__number">{activeHomeworks.length}</div>
         </div>
         <div class="stat-card">
-            <FontAwesomeIcon size="xl" icon={faCheckCircle} />
+            <FontAwesomeIcon size="xl" icon={faCheckCircle} fixedWidth />
             <div class="stat-card__label">Devoirs terminés</div>
             <div class="stat-card__number">{doneHomeworks.length}</div>
         </div>
         <div class="stat-card">
-            <FontAwesomeIcon size="xl" icon={faClock} />
+            <FontAwesomeIcon size="xl" icon={faClock} fixedWidth />
             <div class="stat-card__label">Échéances proches</div>
             <div class="stat-card__number">{soonHomeworks.length}</div>
+        </div>
+        <div class="stat-card">
+            <FontAwesomeIcon size="xl" icon={faClock} fixedWidth />
+            <div class="stat-card__label">Devoirs en retard</div>
+            <div class="stat-card__number">{lateHomeworks.length}</div>
         </div>
     </div>
 {/if}
@@ -53,35 +63,34 @@
     <div class="section-header">
         <h3>
             Devoirs en cours
-            <small>- {(areHomeworksExpended ? activeHomeworks : someActiveHomeworks).length}/{activeHomeworks.length}</small>
+        {#if someActiveHomeworks.length !== activeHomeworks.length}
+            <small>- {(areActiveHomeworksExpended ? activeHomeworks : someActiveHomeworks).length}/{activeHomeworks.length}</small>
+        {/if}
         </h3>
-        <button class="btn-view-all" onclick={() => areHomeworksExpended = !areHomeworksExpended}>Voir tout</button>
+        {#if someActiveHomeworks.length !== activeHomeworks.length}
+        <button class="btn-view-all" onclick={() =>
+            areActiveHomeworksExpended = !areActiveHomeworksExpended
+        }>Voir tout</button>
+        {/if}
     </div>
-    <div class="devoirs-list" id="upcomingAssignments">
-        {#each areHomeworksExpended ? activeHomeworks : someActiveHomeworks as homework}
-        {@const _date = homework.due_date.toLocaleDateString(
-            'fr-FR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            })}
-        <div class="devoir-item">
-            <div>
-                <div class="devoir-title">{homework.title}</div>
-                <div class="devoir-info">{homework.subject}</div>
-            </div>
-            <div class="devoir-date">
-                <i class="far fa-calendar-alt"></i>
-                <span>{_date[0].toUpperCase() + _date.slice(1)}</span>
-            </div>
-        </div>
-        {:else}
-        <div class="devoir-item">
-            <div><div class="devoir-title">Aucun devoir à venir</div></div>
-        </div>
-        {/each}
+    <DevoirList user={data.user} homeworks={areActiveHomeworksExpended ? activeHomeworks : someActiveHomeworks} />
+</div>
+<br>
+<div class="dashboard-section">
+    <div class="section-header">
+        <h3>
+            Devoirs terminés
+        {#if someDoneHomeworks.length !== doneHomeworks.length}
+            <small>- {(areDoneHomeworksExpended ? doneHomeworks : someDoneHomeworks).length}/{doneHomeworks.length}</small>
+        {/if}
+        {#if someDoneHomeworks.length !== doneHomeworks.length}
+        <button class="btn-view-all" onclick={() =>
+            areDoneHomeworksExpended = !areDoneHomeworksExpended
+        }>Voir tout</button>
+        {/if}
+        </h3>
     </div>
+    <DevoirList user={data.user} homeworks={areDoneHomeworksExpended ? doneHomeworks : someDoneHomeworks} />
 </div>
 
 <style lang="scss">
@@ -140,83 +149,5 @@
             margin-bottom: 10px;
             grid-area: icon;
         }
-    }
-
-    .devoirs-list {
-        background-color: white;
-        border-radius: 5px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .devoir-item {
-        padding: 15px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        display: flex;
-        align-items: flex-start;
-        padding: 15px;
-        border-bottom: 1px solid var(--border-color);
-        transition: background-color 0.2s;
-    }
-
-    .devoir-item:last-child {
-        border-bottom: none;
-    }
-
-    .devoir-title {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
-    }
-
-    .devoir-info {
-        color: #777;
-        font-size: 13px;
-    }
-
-    .devoir-item:hover {
-        background-color: #f9f9f9;
-    }
-
-    .devoir-status {
-        margin-right: 15px;
-        padding-top: 5px;
-    }
-
-    .devoir-content {
-        flex: 1;
-    }
-
-    .devoir-title {
-        font-weight: bold;
-        color: var(--text-dark);
-        margin-bottom: 5px;
-    }
-
-    .devoir-description {
-        margin: 5px 0;
-        color: #666;
-        font-size: 14px;
-    }
-
-    .devoir-info {
-        color: var(--text-light);
-        font-size: 13px;
-    }
-
-    .devoir-right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
-    }
-
-    .devoir-date {
-        color: var(--text-medium);
-        font-size: 13px;
-        display: flex;
-        align-items: center;
     }
 </style>

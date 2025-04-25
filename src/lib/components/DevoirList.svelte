@@ -1,8 +1,21 @@
 <script>
-    let { homeworks = [], defaultMsg = 'Aucun devoir à venir' } = $props();
+    import { faCalendarAlt, faCheck, faMinus, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+    import { onMount } from "svelte";
+    import { FontAwesomeIcon } from "fontawesome-svelte";
+
+    let { user, homeworks = [], defaultMsg = 'Aucun devoir à venir', followed = null } = $props();
+
+    /** @type {HTMLElement} */
+    let devoirsList;
+
+    const submitParent = event => {
+        try { event.target.closest("form").submit(); } catch (_) {}
+    };
+
+    const isHomeworkLate = (homework) => homework.due_date.valueOf() < Date.now();
 </script>
 
-<div class="devoirs-list">
+<div class="devoirs-list" bind:this={devoirsList}>
     {#each homeworks as homework}
     {@const _date = homework.due_date.toLocaleDateString(
         'fr-FR', {
@@ -11,16 +24,58 @@
             month: 'long',
             day: 'numeric'
         })}
-    <div class="devoir-item">
-        <div>
-            <h4 class="devoir-title">{homework.title} <small>- par <span title={'en ' + homework.creator_formation}>{homework.creator_name}</span></small></h4>
-            <div class="devoir-info">{homework.subject}</div>
+    <form method="POST" action="/">
+        <input onchange={e => e.target.value = user.id} type="hidden" name="id" value={user.id}>
+        <input onchange={e => e.target.value = homework.id} type="hidden" name="hid" value={homework.id}>
+        <div class="devoir-item">
+            <div>
+                <h4 class="devoir-title">
+                    {#if isHomeworkLate(homework) && user.homeworks.find(h => h.id === homework.id) !== undefined}
+                        <span class="late">En retard</span>-
+                    {/if}
+                    {homework.title}
+                    <small>
+                        - par
+                        {#if !homework.creator_id || user.id === homework.creator_id}
+                            Vous
+                        {:else}
+                        <span title={'en ' + homework.creator_formation}>{homework.creator_name}</span>
+                        {/if}
+                    </small>
+                </h4>
+                <div class="devoir-info">{homework.subject}</div>
+            </div>
+            <div class="devoir-right">
+                <div class="devoir-date">
+                    <FontAwesomeIcon icon={faCalendarAlt} />&nbsp;&nbsp;
+                    <span>Pour le {_date[0].toUpperCase() + _date.slice(1)}</span>
+                </div>
+                <div class="devoir-actions">
+                    {#if user.homeworks.find(h => h.id === homework.id) !== undefined}
+                    <label title={
+                        user.homeworks.find(h => h.id === homework.id && h.done === 1) === undefined
+                        ? "Marquer comme fait" : "Marquer comme non fait"}>
+                        <input onchange={submitParent} style="display: none;" type="checkbox" name="done" checked={
+                            user.homeworks.find(h => h.id === homework.id && h.done === 1) !== undefined
+                        } />
+                        <FontAwesomeIcon icon={
+                            user.homeworks.find(h => h.id === homework.id && h.done === 1) === undefined
+                            ? faCheck : faTimes} />
+                    </label>
+                    {/if}
+                    <label title={
+                        user.homeworks.find(h => h.id === homework.id) === undefined
+                        ? "Suivre" : "Ne plus suivre"}>
+                        <input onchange={submitParent} style="display: none;" type="checkbox" name="follow" checked={
+                            user.homeworks.find(h => h.id === homework.id) !== undefined} />
+                        <FontAwesomeIcon icon={
+                            user.homeworks.find(h => h.id === homework.id) === undefined
+                            ? faPlus : faMinus} />
+                    </label>
+                </div>
+            </div>
         </div>
-        <div class="devoir-date">
-            <i class="far fa-calendar-alt"></i>
-            <span>Pour le {_date[0].toUpperCase() + _date.slice(1)}</span>
-        </div>
-    </div>
+    </form>
     {:else}
     <div class="devoir-item">
         <div><div class="devoir-title">{defaultMsg}</div></div>
@@ -29,6 +84,11 @@
 </div>
 
 <style lang="scss">
+    .late {
+        color: red;
+        font-weight: bold;
+    }
+
     .devoirs-list {
         background-color: white;
         border-radius: 5px;
@@ -61,7 +121,7 @@
             opacity: 0.5;
             font-size: 0.8em;
 
-            span {
+            span[title] {
                 text-decoration: underline dotted;
                 cursor: help;
             }
@@ -111,5 +171,13 @@
         font-size: 13px;
         display: flex;
         align-items: center;
+    }
+
+    .devoir-right {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: centere;
+        gap: 10px;
     }
 </style>

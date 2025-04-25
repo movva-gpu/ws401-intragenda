@@ -5,11 +5,14 @@
     import '$lib/app.scss';
     import Sidebar from '$lib/components/Sidebar.svelte';
     import Header from '$lib/components/Header.svelte';
-    import Calendar from '../lib/components/Calendar.svelte';
-    import DevoirList from '../lib/components/DevoirList.svelte';
+    import Calendar from '$lib/components/Calendar.svelte';
+    import DevoirList from '$lib/components/DevoirList.svelte';
     import { crossfade, fade, slide } from 'svelte/transition';
+    import { faTimes } from '@fortawesome/free-solid-svg-icons';
+    import { FontAwesomeIcon } from 'fontawesome-svelte';
 
     let { children, data } = $props();
+    console.log(data);
 
     /** @type {HTMLDivElement} */
     let info = $state();
@@ -42,7 +45,7 @@
                 searchShown = true;
             });
             search.addEventListener('blur', () => {
-                if (searchValue === '') searchShown = false;
+                // searchShown = false;
             });
             search.addEventListener('input', () => {
                 searchValue = search.value;
@@ -51,11 +54,13 @@
     });
 </script>
 
+{#if data.user && 'name' in data.user}
 <Sidebar
     active={'path' in data && data.path ? data.path : '/'}
     isAdmin={'user' in data && 'role' in data.user && 'admin' === data.user.role}
     searchShown={searchShown}
 />
+{/if}
 <main>
     {#if data.user && 'name' in data.user}
         <Header user={data.user.name} bind:calendarButton bind:search />
@@ -64,26 +69,35 @@
     <div class="info" bind:this={info}>{@html message(data.reason)}</div>
     {#if searchShown}
         <div class="search">
-            <h1>Recherche de devoirs</h1>
+            <h1>
+                <span
+                    tabindex="0"
+                    role="button"
+                    onclick={() => searchShown = !searchShown}
+                    onkeydown={(e) => e.key === 'Enter' && searchValue !== '' && search()}
+                >
+                    <FontAwesomeIcon icon={faTimes} />
+                    Recherche de devoirs
+                </span>
+            </h1>
             <h2>Devoirs suivis</h2>
-            <DevoirList homeworks={data.user.homeworks.filter(homework => searchValue !== '' && (
+            <DevoirList user={data.user} homeworks={data.user.homeworks.filter(homework => searchValue !== '' && (
                 homework.title.includes(searchValue) ||
                 homework.description.includes(searchValue) ||
                 homework.creator_name.includes(searchValue)
             ))} defaultMsg="Aucun devoir suivis trouvé." />
             <hr>
             <h2>Devoirs non suivis</h2>
-            <DevoirList homeworks={data.homeworks.filter(homework => searchValue !== '' && (
+            <DevoirList user={data.user} homeworks={data.homeworks.filter(homework => searchValue !== '' && (
                 homework.title.includes(searchValue) ||
                 homework.description.includes(searchValue) ||
                 homework.creator_name.includes(searchValue)
             ))} defaultMsg="Aucun devoir non-suivis trouvé." />
         </div>
-    {:else}
-        <div>
-            {@render children()}
-        </div>
     {/if}
+    <div>
+        {@render children()}
+    </div>
 </main>
 
 <style lang="scss">
@@ -92,6 +106,11 @@
     :global(h1) {
         color: globals.$cl-text;
         padding-bottom: globals.$sz-sm;
+    }
+
+    hr {
+        padding-bottom: globals.$sz-sm;
+        margin-bottom: globals.$sz-sm;
     }
 
     main {
@@ -103,8 +122,12 @@
 
     .search {
         position: absolute;
-        inset: globals.$sz-lg;
-        top: globals.$sz-header + globals.$sz-lg;
+        inset: 0;
+        padding: inherit; // globals.$sz-lg;
+        padding-top: globals.$sz-lg;
+        top: globals.$sz-header; // + globals.$sz-lg;
+        background: #f5f6fa;
+        z-index: 90;
     }
 
     .info {

@@ -77,3 +77,22 @@ hr {
     border: none;
     border-bottom: 1px solid #ddd;
 }
+
+.btn-view-all {
+    appearance: none;
+    background: none;
+    border: none;
+    color: globals.$cl-iut;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-view-all:hover {
+    text-decoration: underline;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,5 +1,5 @@
 <script>
-    import { faArrowRightFromBracket, faBell, faCalendarAlt, faSearch, faX } from "@fortawesome/free-solid-svg-icons";
+    import { faArrowRightFromBracket, faBell, faCalendarAlt, faSearch, faTimes, faX } from "@fortawesome/free-solid-svg-icons";
     import { FontAwesomeIcon } from "fontawesome-svelte";
     import { onMount } from "svelte";
 
@@ -34,7 +34,7 @@
                 <FontAwesomeIcon icon={faSearch} />
             </div>
             <div class="header__search__icon x">
-                <FontAwesomeIcon icon={faX} />
+                <FontAwesomeIcon icon={faTimes} />
             </div>
             <input type="text" placeholder="Rechercher..." bind:this={search}>
             <kbd>{isMac ? '⌘' : 'Ctrl'}+K</kbd>
@@ -61,8 +61,9 @@
 
     .header {
         position: absolute;
-        inset: 0;
-        bottom: unset;
+        top: 0;
+        right: 0;
+        left: 0;
 
         display: flex;
         justify-content: space-between;
@@ -74,6 +75,7 @@
         background-color: white;
 
         box-shadow: globals.$shadow;
+        z-index: 99;
 
         &__left {
             display: flex;
