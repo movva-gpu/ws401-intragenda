@@ -54,14 +54,14 @@
     <div class="section-header">
         <h3>
             Devoirs créés
-            <a href="/homeworks/create" title="Créer un devoir" style="color: inherit">
-                <FontAwesomeIcon icon={faPlus} />
-            </a>
         {#if someCreatedHomeworks.length !== createdHomeworks.length}
             <small>- {(areCreatedHomeworksExpended ? createdHomeworks : someCreatedHomeworks).length}/{createdHomeworks.length}</small>
         <button class="btn-view-all" onclick={() => areCreatedHomeworksExpended = !areCreatedHomeworksExpended}>Voir tout</button>
         {/if}
         </h3>
+        <a class="add-button" href="/homeworks/create" title="Créer un devoir" style="color: white">
+            Ajouter <FontAwesomeIcon icon={faPlus} />
+        </a>
         {#if someCreatedHomeworks.length !== createdHomeworks.length}
         <button class="btn-view-all" onclick={() =>
             areCreatedHomeworksExpended = !areCreatedHomeworksExpended

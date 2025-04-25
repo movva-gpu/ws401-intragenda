@@ -84,6 +84,12 @@ hr {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: globals.$sz-xs;
+
+    h1, h2, h3, h4 {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 button, input, select, textarea {
@@ -94,10 +100,23 @@ button, input, select, textarea {
     font: inherit;
 }
 
-button {
+.add-button {
     padding: 10px 20px;
     background-color: globals.$cl-iut;
     color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: color.adjust(globals.$cl-iut, $lightness: 10%);
+    }
+}
+
+button {
+    padding: 10px 20px;
+    background-color: globals.$cl-iut;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;

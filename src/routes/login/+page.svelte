@@ -282,6 +282,7 @@
                 border-bottom: 2px solid transparent;
                 border-radius: unset;
                 background: none;
+                color: globals.$cl-text;
 
                 &.active {
                     border-bottom: 2px solid #ffb400;

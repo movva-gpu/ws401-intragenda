@@ -15,7 +15,7 @@
     ]} />
 
     <div class="header">
-        <h1>Ajouter un utilisateur</h1>
+        <h1>Ajout d'un utilisateur</h1>
     </div>
 
     <form method="POST" class="form-container">
