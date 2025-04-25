@@ -156,6 +156,12 @@
                 width: 3em;
                 margin-block-end: globals.$sz-xxxs;
             }
+
+            :global(svg) {
+                width: 2em;
+                height: 2em;
+                margin-block-end: globals.$sz-xxxs;
+            }
         }
 
         &__logo {
