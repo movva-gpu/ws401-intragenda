@@ -15,6 +15,10 @@ body {
     box-sizing: border-box;
 }
 
+button, a, [role=button] {
+    cursor: pointer;
+}
+
 #app {
     min-height: inherit;
     display: flex;
@@ -22,7 +26,6 @@ body {
     & main {
         flex-grow: 1;
         flex-shrink: 0;
-        padding: globals.$sz-lg;
     }
 }
 
@@ -33,6 +36,63 @@ h1 {
     padding-bottom: globals.$sz-xxs;
 }
 
+h2 {
+    font-size: globals.$sz-lg;
+    font-weight: 900;
+    line-height: 1;
+    padding-bottom: globals.$sz-xxs;
+}
+
+h3 {
+    font-size: globals.$sz-lg;
+    font-weight: 700;
+    line-height: 1;
+    padding-bottom: globals.$sz-xs;
+}
+
+h4 {
+    font-size: globals.$sz-md;
+    font-weight: 700;
+    line-height: 1;
+    padding-bottom: globals.$sz-xxs;
+}
+
+b {
+    font-weight: 700;
+}
+
 button, input, textarea, select {
+    display: block;
+    border: 2px solid globals.$cl-title;
+    padding: globals.$sz-xxxs globals.$sz-xxs;
+    border-radius: globals.$sz-xs;
     font: inherit;
+}
+
+label, button, select {
+    cursor: pointer;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.btn-view-all {
+    appearance: none;
+    background: none;
+    border: none;
+    color: globals.$cl-iut;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-view-all:hover {
+    text-decoration: underline;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

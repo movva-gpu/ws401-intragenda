@@ -6,6 +6,7 @@
 		"@sveltejs/adapter-node": "^5.2.12",
 		"@sveltejs/kit": "^2.19.2",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"maildev": "^2.2.1",
 		"sass-embedded": "^1.85.1",
 		"svelte": "^5.23.1",
 		"svelte-check": "^4.1.5",
@@ -13,9 +14,9 @@
 	},
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "docker compose up -d && concurrently -k -n vite,maildev 'vite dev' 'maildev'",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "docker compose up -d && vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
@@ -26,6 +27,7 @@
 		"bcrypt": "^5.1.1",
 		"dotenv": "^16.4.7",
 		"fontawesome-svelte": "^3.0.0",
-		"mariadb": "^3.4.0"
+		"mariadb": "^3.4.0",
+		"nodemailer": "^6.10.0"
 	}
 }

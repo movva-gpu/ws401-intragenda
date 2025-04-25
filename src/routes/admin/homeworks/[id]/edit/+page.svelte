@@ -8,7 +8,7 @@
 <form method="POST" class="form-container">
     <label>
         Titre du devoir :
-        <input type="text" value={data.homeworks.title} name="title" required />
+        <input type="text" value={data.homeworks.title} name="title" required>
     </label>
 
     <label>

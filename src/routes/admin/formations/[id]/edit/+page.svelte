@@ -8,7 +8,7 @@
 <form method="POST" class="form-container">
     <label>
         Nom :
-        <input type="text" value={data.formations.name} name="name" required />
+        <input type="text" value={data.formations.name} name="name" required>
     </label>
 
     <button type="submit">Modifier</button>

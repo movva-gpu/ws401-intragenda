@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Département MMI - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-university"></i>
+                    <span>IUT Troyes</span>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-item">
+            <a href="iut-dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <a href="iut-devoirs.html">
+                <i class="fas fa-book"></i>
+                <span>Devoirs</span>
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <a href="#">
+                <i class="fas fa-calendar"></i>
+                <span>Calendrier</span>
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <a href="#">
+                <i class="fas fa-users"></i>
+                <span>Groupes</span>
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1 class="header-title">Département MMI</h1>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher..." id="searchInput">
+                    <span>Ctrl+K</span>
+                </div>
+            </div>
+            <div class="header-tools">
+                <div class="icon" id="notification-button">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </div>
+                <div class="icon" id="calendar-button">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/30/30" alt="Profil" class="avatar">
+                    <span class="username">Étudiant</span>
+                </div>
+                <div class="icon"><i class="fas fa-bars" id="menu-toggle"></i></div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2 class="content-title">Tableau de bord</h2>
+            <div class="breadcrumb">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </div>
+        </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <i class="fas fa-book-open stat-icon"></i>
+                    <div class="stat-number" id="activeTasks">3</div>
+                    <div class="stat-label">Devoirs en cours</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle stat-icon"></i>
+                    <div class="stat-number" id="completedTasks">12</div>
+                    <div class="stat-label">Devoirs terminés</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock stat-icon"></i>
+                    <div class="stat-number" id="upcomingDeadlines">2</div>
+                    <div class="stat-label">Échéances proches</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line stat-icon"></i>
+                    <div class="stat-number" id="averageProgress">78%</div>
+                    <div class="stat-label">Progression moyenne</div>
+                </div>
+            </div>
+
+            <!-- Prochains devoirs -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>Prochains devoirs</h3>
+                    <button class="btn-view-all">Voir tout</button>
+                </div>
+                <div class="devoirs-list" id="upcomingAssignments">
+                    <div class="devoir-item">
+                        <div>
+                            <div class="devoir-title">Projet HTML/CSS - Site personnel</div>
+                            <div class="devoir-info">M1106 - Intégration web</div>
+                            <div class="devoir-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 75%;"></div>
+                                </div>
+                                <span class="progress-text">75%</span>
+                            </div>
+                        </div>
+                        <div class="devoir-date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>20 mars 2025</span>
+                        </div>
+                    </div>
+                    <div class="devoir-item">
+                        <div>
+                            <div class="devoir-title">Examen JavaScript</div>
+                            <div class="devoir-info">M2203 - Programmation client</div>
+                            <div class="devoir-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%;"></div>
+                                </div>
+                                <span class="progress-text">40%</span>
+                            </div>
+                        </div>
+                        <div class="devoir-date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>25 mars 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dernières activités -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>Dernières activités</h3>
+                    <button class="btn-view-all">Voir tout</button>
+                </div>
+                <div class="activities-list" id="recentActivities">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Devoir soumis</div>
+                            <div class="activity-info">TP Base de données - M2202</div>
+                            <div class="activity-time">Il y a 2 heures</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Commentaire de professeur</div>
+                            <div class="activity-info">Projet UX Design - M2105</div>
+                            <div class="activity-time">Il y a 1 jour</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Note reçue</div>
+                            <div class="activity-info">Examen PHP - M2203 : 17/20</div>
+                            <div class="activity-time">Il y a 3 jours</div>
+                        </div>
+            <h2 class="content-title">Devoirs</h2>
+            <div class="breadcrumb">
+                <i class="fas fa-home"></i>
+                <span>Lorem</span>
+            </div>
+
+            <!-- Devoirs list -->
+            <div class="devoirs-list">
+                <div class="devoir-item">
+                    <div>
+                        <div class="devoir-title">Projet HTML/CSS - Site personnel</div>
+                        <div class="devoir-info">M1106 - Intégration web</div>
+                    </div>
+                    <div class="devoir-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>20 mars 2025</span>
+                    </div>
+                </div>
+                <div class="devoir-item">
+                    <div>
+                        <div class="devoir-title">Examen JavaScript</div>
+                        <div class="devoir-info">M2203 - Programmation client</div>
+                    </div>
+                    <div class="devoir-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>25 mars 2025</span>
+                    </div>
+                </div>
+                <div class="devoir-item">
+                    <div>
+                        <div class="devoir-title">Projet base de données</div>
+                        <div class="devoir-info">M3202 - Base de données avancées</div>
+                    </div>
+                    <div class="devoir-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>2 avril 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-copyright">
+                Copyright © MMI Troyes 2025 All rights reserved | Version 1.2
+            </div>
+            <div class="footer-links">
+                <a href="#">Aide</a> /
+                <a href="#">Données personnelles</a> /
+                <a href="#">À propos</a> /
+                <a href="#">Mentions légales</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendrier Modal -->
+    <div class="calendar-modal" id="calendar-modal">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-title">Calendrier des devoirs</div>
+                <div class="calendar-close" id="calendar-close">&times;</div>
+            </div>
+            <div class="calendar-navigation">
+                <button class="calendar-nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i> Mois précédent
+                </button>
+                <div class="calendar-month-year" id="calendar-month-year">Mars 2025</div>
+                <button class="calendar-nav-btn" id="next-month">
+                    Mois suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Le calendrier sera généré par JavaScript -->
+            </div>
+            <div class="calendar-events-list" id="calendar-events-list">
+                <h3>Prochains événements</h3>
+                <!-- La liste des événements sera générée par JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div class="modal" id="notifications-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Notifications</div>
+                <div class="modal-close" id="notifications-close">&times;</div>
+            </div>
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be generated by JavaScript -->
+            </div>
+            <div class="notifications-actions">
+                <button class="btn-mark-all-read" id="mark-all-read">Tout marquer comme lu</button>
+                <button class="btn-notifications-settings">Paramètres</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="dashboard.js"></script>
+    <script src="calendar-script.js"></script>
+</body>
+</html>

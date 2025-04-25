@@ -18,12 +18,6 @@
                     {subjects.name} en {data.subjects[subjects.formation_id - 1].name} -
                     <a href="/admin/subjects/{subjects.id}/edit/">Modifier</a>
                     <a href="/admin/subjects/{subjects.id}/del/">Supprimer</a>
-                </li>
-            {/each}
-        </ul>
-    {/if}
-{:else}
-    <p>Wtf</p>
 {/if}
 
 <style>

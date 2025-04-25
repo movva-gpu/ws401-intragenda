@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 import { createSecureServer, createServer } from 'http2';
 import { handler } from './build/handler.js';
 import { config } from 'dotenv'
@@ -8,8 +8,9 @@ config();
 
 const options = {
     key: fs.readFileSync(process.env.CERT_KEY),
-    cert: fs.readFileSync(process.env.CERT)
-};
+    cert: fs.readFileSync(process.env.CERT),
+    allowHTTP1: true,
+    };
 
 const server = createSecureServer(options, handler);
 
