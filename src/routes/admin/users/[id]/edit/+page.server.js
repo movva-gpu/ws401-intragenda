@@ -44,9 +44,9 @@ export const actions = {
 
 //     try {
 //         await db.query(`
-//             UPDATE users SET
-//             full_name = ?, email = ?, role = ?, formation_id = ?
-//             WHERE id = ?`,
+//             UPDATE users SET 
+//             full_name = ?, email = ?, role = ?, formation_id = ? 
+//             WHERE id = ?`, 
 //             [full_name, email, role, formation_id, id]
 //         );
 

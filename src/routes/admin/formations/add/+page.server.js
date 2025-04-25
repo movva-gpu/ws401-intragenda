@@ -1,25 +1,22 @@
 import { db } from '$lib/db';
 import { fail, isActionFailure, redirect } from '@sveltejs/kit';
 
-export async function load({ params }) {
-    const [ formations ] = await db.execute('SELECT * FROM formations WHERE id = ?', [params.id]);
-
-    if (!formations) redirect(307, '/admin/formations');
-
-    return { formations };
+export async function load() {
+    return {};
 }
 
 export const actions = {
-    default: async ({ request, params }) => {
+    default: async ({ request }) => {
         const data = await request.formData();
         const { name } = Object.fromEntries(data);
+
         if (!name) {
-            return fail(400, { field: 'name', message: 'Le nom complet est requis' });
+            return fail(400, { field: 'name', message: 'Le nom est requis' });
         }
 
         const err = await db.query(
-            `UPDATE formations SET name = ? WHERE id = ?`,
-            [name, params.id],
+            `INSERT INTO formations (name) VALUES (?)`,
+            [name]
         ).catch((error) => {
             return fail(500, { message: error.message });
         });
@@ -27,4 +24,4 @@ export const actions = {
 
         return redirect(303, '/admin/formations');
     }
-}
+};
