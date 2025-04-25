@@ -33,7 +33,8 @@
         <ul>
             <li>
                 <a href="/" class="sidebar__logo">
-                    <FontAwesomeIcon icon={faUniversity} />
+                    <!-- <FontAwesomeIcon icon={faUniversity} /> -->
+                    <img src="/logo.webp" alt="Logo" />
                 </a>
             </li>
             <div class="shadow">
@@ -151,9 +152,8 @@
             text-align: center;
             text-decoration: none;
 
-            :global(svg) {
-                width: 2em;
-                height: 2em;
+            :global(img) {
+                width: 3em;
                 margin-block-end: globals.$sz-xxxs;
             }
         }
