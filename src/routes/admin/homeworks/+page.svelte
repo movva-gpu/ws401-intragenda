@@ -1,53 +1,51 @@
 <script>
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+    import '$lib/_admin.scss';
+
     let { data } = $props();
 </script>
 
 {#if data && 'homeworks' in data}
+    <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Admin', href: '/admin' },
+        { label: 'Devoirs', href: '/admin/homeworks' },
+    ]} />
+
     <div class="header">
         <h1>Devoirs</h1>
         <a href="/admin/homeworks/add" class="add-button">Ajouter</a>
     </div>
-    
+
     {#if data.homeworks.length === 0}
-        <p>No homeworks</p>
+        <p>Aucun devoir</p>
     {:else}
-        <ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Matière</th>
+                <th>Date limite</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             {#each data.homeworks as homework}
-                <li>
-                    {homework.id} - 
-                    {homework.title} - 
-                    {homework.description} - 
-                    {data.homeworks[homework.subject_id - 1]?.name} - 
-                    {homework.due_date} -
-                    <a href="/admin/homeworks/{homework.id}/edit/">Modifier</a>
-                    <a href="/admin/homeworks/{homework.id}/del/">Supprimer</a>
-                </li>
+                <tr>
+                    <td>{homework.title}</td>
+                    <td>{homework.description}</td>
+                    <td>{homework.subject_name}</td>
+                    <td>{homework.due_date.toLocaleDateString('fr-FR')}</td>
+                    <td>
+                        <a href="/admin/homeworks/{homework.id}/edit/">Modifier</a>
+                        <a href="/admin/homeworks/{homework.id}/del/">Supprimer</a>
+                    </td>
+                </tr>
             {/each}
-        </ul>
+        </tbody>
+    </table>
     {/if}
 {:else}
     <p>Erreur de données</p>
 {/if}
-
-<style>
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .add-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
-
-    .add-button:hover {
-        background-color: #45a049;
-    }
-</style>

@@ -31,7 +31,6 @@
             ...items,
         ];
     });
-
 </script>
 
 <nav aria-label="Breadcrumb" class="container__breadcrumb">
@@ -52,6 +51,8 @@
                     {/if}
                 </a>
             </li>
+        {:else}
+            /
         {/each}
     </ol>
 </nav>

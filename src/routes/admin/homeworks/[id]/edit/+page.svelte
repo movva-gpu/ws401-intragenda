@@ -1,14 +1,30 @@
 <script>
+    import Breadcrumb from '../../../../../lib/components/Breadcrumb.svelte';
+    import '$lib/_admin.scss';
+
     let { data } = $props();
+
+    let title = $state(data.homeworks.title);
 </script>
 
 {#if !('homeworks' in data) }
     <p>Unreachable</p>
 {:else}
+<Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Admin', href: '/admin' },
+    { label: 'Devoirs', href: '/admin/homeworks' },
+    { label: `Modification de "${title}"`, href: `/admin/homeworks/${data.homeworks.id}/edit` }
+]} />
+
+<div class="header">
+    <h1>Modification de {title}</h1>
+</div>
+
 <form method="POST" class="form-container">
     <label>
         Titre du devoir :
-        <input type="text" value={data.homeworks.title} name="title" required>
+        <input type="text" bind:value={title} name="title" required>
     </label>
 
     <label>
@@ -31,12 +47,3 @@
     <button type="submit">Modifier</button>
 </form>
 {/if}
-
-<style>
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-width: 300px;
-    }
-</style>

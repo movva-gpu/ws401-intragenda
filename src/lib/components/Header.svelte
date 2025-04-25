@@ -100,11 +100,13 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                color: globals.$cl-text;
 
                 width: 30px;
                 height: 30px;
-                border-radius: 50%;
+                padding: 0;
                 border: 1px solid #ddd;
+                border-radius: 50%;
 
                 background-color: #eee;
 
@@ -145,6 +147,7 @@
                 margin-left: 16px;
                 border: none;
                 outline: none;
+                padding-block: 0;
                 padding-inline: 0;
                 width: 150px;
 

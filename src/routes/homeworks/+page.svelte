@@ -26,8 +26,11 @@
     let areCreatedHomeworksExpended = $state(false);
 </script>
 
+<Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Devoirs', href: '/homeworks' }
+]} />
 <h1>Devoirs</h1>
-<Breadcrumb />
 
 <div class="dashboard-section">
     <div class="section-header">

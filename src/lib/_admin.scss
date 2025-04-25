@@ -1,0 +1,89 @@
+@use 'sass:color';
+@use 'globals';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: globals.$cl-iut;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: color.adjust(globals.$cl-iut, $lightness: 10%);
+    }
+}
+
+.back-button {
+    padding: 10px 20px;
+    background-color: globals.$cl-iut;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: color.adjust(globals.$cl-iut, $lightness: 10%);
+    }
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+}
+
+input {
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    a {
+        margin-left: 10px;
+        text-decoration: none;
+        color: globals.$cl-sec;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #e0e0e0;
+        font-weight: bold;
+    }
+
+    tr {
+        &:nth-child(even) {
+            background-color: #eee;
+
+            &:hover {
+                background-color: #eaeaea;
+            }
+        }
+
+        &:hover {
+            background-color: #f2f2f2;
+        }
+    }
+}

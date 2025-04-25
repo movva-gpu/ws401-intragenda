@@ -12,7 +12,6 @@
     import { FontAwesomeIcon } from 'fontawesome-svelte';
 
     let { children, data } = $props();
-    console.log(data);
 
     /** @type {HTMLDivElement} */
     let info = $state();

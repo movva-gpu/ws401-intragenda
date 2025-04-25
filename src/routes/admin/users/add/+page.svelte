@@ -1,13 +1,23 @@
 <script>
+    import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+    import '$lib/_admin.scss';
+
     export let data;
 </script>
 
+
 {#if data && 'formations' in data}
+    <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Admin', href: '/admin' },
+        { label: 'Utilisateurs', href: '/admin/users' },
+        { label: 'Ajout', href: '/admin/users/add' }
+    ]} />
+
     <div class="header">
         <h1>Ajouter un utilisateur</h1>
-        <a href="/admin/users" class="back-button">Retour à la liste</a>
     </div>
-    
+
     <form method="POST" class="form-container">
         <label>
             Nom complet :
@@ -49,7 +59,10 @@
     <p>Impossible de charger les formations.</p>
 {/if}
 
-<style>
+<style lang="scss">
+    @use 'sass:color';
+    @use '$lib/globals';
+
     .header {
         display: flex;
         justify-content: space-between;
@@ -59,16 +72,16 @@
 
     .back-button {
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: globals.$cl-iut;
         color: white;
         text-decoration: none;
         border-radius: 5px;
         font-weight: bold;
         transition: background-color 0.3s;
-    }
 
-    .back-button:hover {
-        background-color: #45a049;
+        &:hover {
+            background-color: color.adjust(globals.$cl-iut, $lightness: 10%);
+        }
     }
 
     .form-container {
@@ -87,15 +100,17 @@
 
     button {
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: globals.$cl-iut;
         color: white;
+        text-decoration: none;
         border-radius: 5px;
         font-weight: bold;
+        transition: background-color 0.3s;
         border: none;
         cursor: pointer;
-    }
 
-    button:hover {
-        background-color: #45a049;
+        &:hover {
+            background-color: color.adjust(globals.$cl-iut, $lightness: 10%);
+        }
     }
 </style>

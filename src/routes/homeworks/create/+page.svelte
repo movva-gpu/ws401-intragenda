@@ -1,7 +1,15 @@
 <script>
+    import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+
     let { data } = $props();
     console.log(data);
 </script>
+
+<Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Devoirs', href: '/homeworks' },
+    { label: 'Création de devoir', href: '/homeworks/create' }
+]} />
 
 <form method="POST" action="/homeworks">
     <div>

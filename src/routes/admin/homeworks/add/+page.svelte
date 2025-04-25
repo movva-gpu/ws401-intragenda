@@ -1,25 +1,35 @@
 <script>
+    import Breadcrumb from '../../../../lib/components/Breadcrumb.svelte';
+    import '$lib/_admin.scss';
+
     export let data;
 </script>
 
-{#if data && 'subjects' in data}
+{#if data && 'homeworks' in data}
+    <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Admin', href: '/admin' },
+        { label: 'Devoirs', href: '/admin/homeworks' },
+        { label: 'Ajout', href: `/admin/homeworks/add` }
+    ]} />
+
     <div class="header">
-        <a href="/admin/homeworks" class="back-button">Retour à la liste</a>
+        <h1>Ajout d'un devoir</h1>
     </div>
-    
+
     <form method="POST" class="form-container">
         <label>
-            Titre :
+            Titre&nbsp;:
             <input type="text" name="title" required />
         </label>
 
         <label>
-            Description :
+            Description&nbsp;:
             <textarea name="description" required></textarea>
         </label>
 
         <label>
-            Sujet :
+            Sujet&nbsp;:
             <select name="subject_id" required>
                 <option value="">--Choisir un sujet</option>
                 {#each data.subjects as subject}
@@ -29,7 +39,7 @@
         </label>
 
         <label>
-            Date d'échéance :
+            Date d'échéance&nbsp;:
             <input type="datetime-local" name="due_date" required />
         </label>
 
@@ -38,54 +48,3 @@
 {:else}
     <p>Erreur de données</p>
 {/if}
-
-<style>
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .back-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
-
-    .back-button:hover {
-        background-color: #45a049;
-    }
-
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-width: 300px;
-    }
-
-    input, select {
-        padding: 8px;
-        margin: 5px 0;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border-radius: 5px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>

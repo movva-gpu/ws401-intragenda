@@ -27,8 +27,8 @@
     let areDoneHomeworksExpended = $state(false);
 </script>
 
-<h1>Tableau de bord</h1>
 <Breadcrumb />
+<h1>Tableau de bord</h1>
 
 {#if data.user.homeworks.length === 0}
     <div class="nothing">C'est calme, trop calme. Allez donc faire une sieste&nbsp;!</div>

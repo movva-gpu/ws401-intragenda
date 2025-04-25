@@ -6,7 +6,4 @@ import { genSaltSync, hashSync } from "bcrypt";
 export async function init() {
     await connect();
     await createSchemas();
-
-    const hash = hashSync("ADMIN", genSaltSync());
-    console.log(hash)
 }
