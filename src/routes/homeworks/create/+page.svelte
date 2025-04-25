@@ -2,7 +2,6 @@
     import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 
     let { data } = $props();
-    console.log(data);
 </script>
 
 <Breadcrumb items={[
@@ -43,3 +42,7 @@
     <br>
     <button type="submit">Create Homework</button>
 </form>
+
+<style>
+    textarea { display: block; }
+</style>

@@ -84,6 +84,9 @@
 </div>
 
 <style lang="scss">
+    label {
+        cursor: pointer;
+    }
     .late {
         color: red;
         font-weight: bold;

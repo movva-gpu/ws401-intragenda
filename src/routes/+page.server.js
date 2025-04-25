@@ -19,8 +19,6 @@ export const actions = {
 		const follow = data.get('follow');
 		const sessionToken = cookies.get('session');
 
-		console.log(id, hid, done, follow)
-
 		const users = await db.execute(
             `SELECT u.id as id, u.full_name AS name, u.email, u.role, f.name AS formation
             FROM users u

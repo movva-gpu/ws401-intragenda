@@ -51,7 +51,6 @@ export async function load({ url, cookies }) {
             h.updated_at,
             s.name AS subject
         FROM homeworks h
-        INNER JOIN user_follow_homeworks ufh ON h.id = ufh.homework_id
         INNER JOIN subjects s ON h.subject_id = s.id
         WHERE h.user_id = (SELECT user_id FROM connected_users WHERE token = ?)`,
         [sessionToken]
